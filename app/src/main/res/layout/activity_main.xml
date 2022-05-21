@@ -62,7 +62,7 @@
 
     <EditText
         android:id="@+id/searchEditText"
-        android:layout_width="213dp"
+        android:layout_width="215dp"
         android:layout_height="49dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="152dp"
@@ -72,6 +72,7 @@
         android:lines="1"
         android:maxLines="1"
         android:singleLine="true"
+        android:imeOptions="actionDone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,13 +109,15 @@
 
     <EditText
         android:id="@+id/newNameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="215dp"
+        android:layout_height="49dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/hint_newContactName_field"
         android:inputType="textPersonName"
+        android:lines="1"
+        android:maxLines="1"
         android:singleLine="true"
         android:imeOptions="actionDone"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,14 +125,16 @@
 
     <EditText
         android:id="@+id/newNumberEditText"
-        android:layout_width="209dp"
-        android:layout_height="44dp"
+        android:layout_width="215dp"
+        android:layout_height="49dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="71dp"
         android:ems="10"
         android:hint="@string/hint_newContactNumber_field"
         android:imeOptions="actionDone"
         android:inputType="phone"
+        android:lines="1"
+        android:maxLines="1"
         android:singleLine="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -34,8 +34,7 @@ PhoneBook* PhoneBook::getInstance() {
 }
 
 
-PhoneBook::PhoneBook()
-{
+PhoneBook::PhoneBook() {
     // Default 21 (!) contacts
     contactMap = {
             {"Zermelo Fraenkel",      "+7 902 585 00 55"},
@@ -87,10 +86,9 @@ std::string PhoneBook::sendContactsList() const {
 
 
 // TODO : ВНИМАНИЕ! КОСТЫЛЬ! ПЕРЕДЕЛАТЬ ЧЕРЕЗ JSON!
-std::string PhoneBook::findContactByName(const std::string& name) const
-{
-    json contactList;
-    json contact;
+std::string PhoneBook::findContactByName(const std::string& name) const {
+    json contact;     // 'name->number' pair
+    json contactList; // list of 'contact's
 
     for (const auto& n : contactMap)
     {
@@ -115,8 +113,7 @@ std::string PhoneBook::findContactByName(const std::string& name) const
 }
 
 
-void PhoneBook::addContact(const std::string& jsonStr)
-{
+void PhoneBook::addContact(const std::string& jsonStr) {
     // Deserialize JSON string from Java
     json request = json::parse(jsonStr);
 

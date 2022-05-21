@@ -100,6 +100,81 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+        /*
+         * "Find" button
+         */
+
+        button_FindContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Clear listView
+                contactsList.setAdapter(null);
+
+                // Get input string
+                String strRequest = et_searchField.getText().toString();
+
+                // Send request to c++, then store answer
+                ArrayList<String> foundContactsArr = getContactsByName(strRequest);
+
+                // Create new adapter
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, foundContactsArr);
+
+                // Refresh info
+                contactsList.setAdapter(adapter);
+                tv_totalContacts.setText(getString(R.string.counter_messages, String.valueOf(foundContactsArr.size())));
+            }
+
+        });
+
+
+        /*
+         * "Add contact" button
+         */
+
+        button_AddContact.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Store input info
+                String strName = et_newNameField.getText().toString();
+                String strNums = et_newNumberField.getText().toString();
+
+                // ДОБАВИТЬ ПРОВЕРОК??? ФОРМАТИРОВАНИЕ НОМЕРА??? РЕГУЛЯРКИ?!
+
+                // Check empty input
+                if (strName.length() == 0)
+                {
+                    strName = "EmptyName";
+                }
+
+                if (strNums.length() == 0)
+                {
+                    strNums = "EmptyNumber";
+                }
+
+
+                et_newNameField.setText("");
+                et_newNumberField.setText("");
+
+
+                // Create JSON Object
+                JSONObject newContact = new JSONObject();
+
+                try {
+                    newContact.put("Name", strName);
+                    newContact.put("Number", strNums);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                // Send serialized JSONObject to С++
+                addNewContact(ptBook, newContact.toString());
+
+            }
+        });
     }
 
 
@@ -136,6 +211,38 @@ public class MainActivity extends AppCompatActivity {
         return contactsList;
     }
 
+
+    // TODO : ВНИМАНИЕ! КОСТЫЛЬ! ПЕРЕДЕЛАТЬ ЧЕРЕЗ ОТПРАВКУ JSON!
+    ArrayList<String> getContactsByName(String request)
+    {
+        // Result array
+        ArrayList<String> contactsList = new ArrayList<String>();
+
+        // Java sends JSON to C++, then answer is stored in 'result'
+        String result = sendContactByName(ptBook, request);
+
+        // Translate JSON string from C++
+        try
+        {
+            JSONArray contactList = (new JSONObject(result)).getJSONArray("contactList");
+
+            for (int i = 0; i < contactList.length(); i++)
+            {
+                JSONObject contact = contactList.getJSONObject(i);
+                String contactName = contact.getString("Name");
+                String contactNumbers = contact.getString("Number");
+
+                contactsList.add((i + 1) + ". " + contactName + "\n" + contactNumbers);
+            }
+
+        }
+        catch (JSONException e)
+        {
+            contactsList.add("None");
+        }
+
+        return contactsList;
+    }
 
     // Native methods implemented in cpp library
     private native long createBook();
