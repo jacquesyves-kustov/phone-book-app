@@ -7,7 +7,7 @@ PhoneBook* PhoneBook::ptInstance = nullptr;
 PhoneBookDestroyer PhoneBook::destroyer;
 
 
-// Auxiliary class methods implementations
+// Implementation of auxiliary class methods
 PhoneBookDestroyer::PhoneBookDestroyer() {
     phoneBookInstance = nullptr;
 }
@@ -23,7 +23,7 @@ void PhoneBookDestroyer::initialize( PhoneBook* ptPhoneBook ) {
 }
 
 
-// PhoneBook Class methods
+// Implementation of PhoneBook class methods
 PhoneBook* PhoneBook::getInstance() {
     if (ptInstance == nullptr) {
         ptInstance = new PhoneBook();
@@ -36,7 +36,7 @@ PhoneBook* PhoneBook::getInstance() {
 
 PhoneBook::PhoneBook()
 {
-    // 21 contacts
+    // Default 21 (!) contacts
     contactMap = {
             {"Zermelo Fraenkel",      "+7 902 585 00 55"},
             {"Benedict Austin",       "+7 901 343 22 34"},
@@ -63,11 +63,11 @@ PhoneBook::PhoneBook()
 }
 
 
-std::string PhoneBook::sendContactsList() const
-{
-    json contactList;
-    json contact;
+std::string PhoneBook::sendContactsList() const {
+    json contact;     // 'name->number' pair
+    json contactList; // list of 'contact's
 
+    // Add every contact ("name->number" pair) to 'contactList'
     for (const auto& n : contactMap)
     {
         contact["Name"] = n.first;
@@ -77,6 +77,7 @@ std::string PhoneBook::sendContactsList() const
         contact.clear();
     }
 
+    // Return 'contactList' as serialized JSON
     json result;
     result["contactList"] = contactList;
     std::string json_str = result.dump();
@@ -85,6 +86,7 @@ std::string PhoneBook::sendContactsList() const
 }
 
 
+// TODO : ВНИМАНИЕ! КОСТЫЛЬ! ПЕРЕДЕЛАТЬ ЧЕРЕЗ JSON!
 std::string PhoneBook::findContactByName(const std::string& name) const
 {
     json contactList;
@@ -115,6 +117,9 @@ std::string PhoneBook::findContactByName(const std::string& name) const
 
 void PhoneBook::addContact(const std::string& jsonStr)
 {
+    // Deserialize JSON string from Java
     json request = json::parse(jsonStr);
+
+    // Add its content to map member
     contactMap[request["Name"]] = request["Number"];
 }
