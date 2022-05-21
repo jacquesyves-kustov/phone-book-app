@@ -2,6 +2,7 @@ package com.example.phonebookapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -174,6 +175,22 @@ public class MainActivity extends AppCompatActivity {
                 addNewContact(ptBook, newContact.toString());
 
             }
+        });
+
+
+        /*
+         * "DEBUG" button
+         */
+
+        button_Debug.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DebugActivity.class);
+                startActivity(intent);
+            }
+
+
         });
     }
 

@@ -2,7 +2,7 @@
 #include "PhoneBook.h"
 
 
-// Create an instance
+// Create an instance with static function
 extern "C"
 JNIEXPORT jlong JNICALL
 Java_com_example_phonebookapp_MainActivity_createBook(

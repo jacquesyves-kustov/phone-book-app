@@ -4,6 +4,7 @@
     <string name="find_button">FIND</string>
     <string name="clear_button">CLEAR</string>
     <string name="debug_button">DEBUG</string>
+    <string name="back_button">BACK</string>
     <string name="showAll_button">ALL</string>
     <string name="hint_findContact_field">Поиск по имени</string>
     <string name="hint_newContactName_field">Имя нового контакта</string>
