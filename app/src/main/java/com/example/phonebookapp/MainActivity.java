@@ -17,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("phonebookapp");
     }
 
+    // Memory address of C++ PhoneBook instance
+    private long  ptBook = 0;
+
     private ActivityMainBinding binding;
 
     @Override
@@ -44,11 +47,15 @@ public class MainActivity extends AppCompatActivity {
         // Set default value to 'totalContacts'
         totalContacts.setText("Всего контактов: 0");
 
+        // Create a cpp class
+        ptBook = createBook();
+
     }
 
-    /**
-     * A native method that is implemented by the 'phonebookapp' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
+
+    // Native methods implemented in cpp library
+    private native long createBook();
+    private native String sendAllContacts(long ptBook);
+    private native String sendContactByName(long ptBook, String request);
+    private native void addNewContact(long ptBook, String jsonStr);
 }
