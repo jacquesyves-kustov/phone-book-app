@@ -12,7 +12,6 @@ Java_com_example_phonebookapp_MainActivity_createBook(
 }
 
 
-// Methods
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_example_phonebookapp_MainActivity_sendAllContacts(
@@ -31,7 +30,7 @@ Java_com_example_phonebookapp_MainActivity_sendContactByName(JNIEnv *env, jobjec
                                                          jstring request) {
     PhoneBook* bookInstance = reinterpret_cast<PhoneBook *>(ptBook);
 
-    const char *cstr = env->GetStringUTFChars(request, NULL);
+    const char *cstr = env->GetStringUTFChars(request, nullptr);
     std::string str = std::string(cstr);
 
     return env->NewStringUTF(bookInstance->findContactByName(str).c_str());
@@ -44,7 +43,7 @@ Java_com_example_phonebookapp_MainActivity_addNewContact(JNIEnv *env, jobject th
                                                      jstring request) {
     PhoneBook* bookInstance = reinterpret_cast<PhoneBook *>(ptBook);
 
-    const char *cstr = env->GetStringUTFChars(request, NULL);
+    const char *cstr = env->GetStringUTFChars(request, nullptr);
     std::string str = std::string(cstr);
 
     bookInstance->addContact(str);

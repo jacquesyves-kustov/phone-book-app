@@ -20,8 +20,8 @@ public class DebugActivity extends AppCompatActivity {
         Button btBack = findViewById(R.id.backButton);
 
 
-        // Define system info in string
-        String s = "Debug-infos:";
+        // Store system info in string
+        String s = "Debug information:";
         s += "\n OS Version: " + System.getProperty("os.version") + "(" + android.os.Build.VERSION.INCREMENTAL + ")";
         s += "\n OS API Level: " + android.os.Build.VERSION.SDK_INT;
         s += "\n Device: " + android.os.Build.DEVICE;

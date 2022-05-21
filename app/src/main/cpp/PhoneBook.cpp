@@ -4,6 +4,7 @@
 // Set default value static members
 PhoneBook* PhoneBook::ptInstance = nullptr;
 
+
 PhoneBookDestroyer PhoneBook::destroyer;
 
 
@@ -118,6 +119,10 @@ void PhoneBook::addContact(const std::string& jsonStr) {
     // Deserialize JSON string from Java
     json request = json::parse(jsonStr);
 
+    std::string number = request["Number"];
+
+    // Форматирование номера??
+
     // Add its content to map member
-    contactMap[request["Name"]] = request["Number"];
+    contactMap[request["Name"]] = ((number[0] == '+') ? number : ("+" + number));
 }
