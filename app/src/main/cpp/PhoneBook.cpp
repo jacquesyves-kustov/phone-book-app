@@ -85,14 +85,15 @@ std::string PhoneBook::sendContactsList() const {
 }
 
 
-// TODO : ВНИМАНИЕ! КОСТЫЛЬ! ПЕРЕДЕЛАТЬ ЧЕРЕЗ JSON!
-std::string PhoneBook::findContactByName(const std::string& name) const {
+std::string PhoneBook::findContactByName(const std::string& JSONstr) const {
+    json request = json::parse(JSONstr);
+
     json contact;     // 'name->number' pair
     json contactList; // list of 'contact's
 
     for (const auto& n : contactMap)
     {
-        if (n.first.find(name) != std::string::npos)
+        if (n.first.find(request["Name"]) != std::string::npos)
         {
             contact["Name"] = n.first;
             contact["Number"] = n.second;

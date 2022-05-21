@@ -229,14 +229,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // TODO : ВНИМАНИЕ! КОСТЫЛЬ! ПЕРЕДЕЛАТЬ ЧЕРЕЗ ОТПРАВКУ JSON!
     ArrayList<String> getContactsByName(String request)
     {
         // Result array
         ArrayList<String> contactsList = new ArrayList<String>();
 
+        // Create JSON Object
+        JSONObject jRequest = new JSONObject();
+
+        String result = "None";
+
         // Java sends JSON to C++, then answer is stored in 'result'
-        String result = sendContactByName(ptBook, request);
+        try {
+            jRequest.put("Name", request);
+            result = sendContactByName(ptBook, jRequest.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Translate JSON string from C++
         try
