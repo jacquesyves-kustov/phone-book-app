@@ -1,4 +1,7 @@
 # PhoneBookApp
+
+[![Watch the video](https://img.youtube.com/shorts/Qrpciz-zXEs/default.jpg)](https://youtube.com/shorts/Qrpciz-zXEs)
+
 ## Привет, Domini Games!
 Благодарю за возможность поучаствовать в отборе! После бесконечного прорешивания задачек на Codewars и чтения книг мне было жутко интересно поработать над прикладными задачами. Мое решение тестового — в репозитории, а тут оставляю свои комментарии.
 
