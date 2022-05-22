@@ -38,27 +38,27 @@ PhoneBook* PhoneBook::getInstance() {
 PhoneBook::PhoneBook() {
     // Default 21 (!) contacts
     contactMap = {
-            {"Zermelo Fraenkel",      "+7 902 585 00 55"},
-            {"Benedict Austin",       "+7 901 343 22 34"},
-            {"Anna Brown",            "+7 900 159 64 87"},
-            {"Charlie Chaplin",       "+1 475 654 87 21"},
-            {"Ludwig Wittgenstein",   "+4 147 252 39 97"},
-            {"Johan A.",              "+4 987 873 87 64"},
-            {"Jonathan Whitley",      "+3 123 454 21 32"},
-            {"Edward (guitarist)",    "+7 456 321 32 21"},
-            {"Jack B.",               "+7 789 123 45 67"},
-            {"BOSS",                  "+3 321 632 12 34"},
-            {"Alexander The Great",   "+4 654 091 67 89"},
-            {"Mom",                   "+5 987 651 12 56"},
-            {"SECOND WORK",           "+6 712 331 21 56"},
-            {"Honey :3",              "+7 098 764 63 90"},
-            {"Robert Brandom",        "+7 891 241 24 23"},
-            {"Maria J.",              "+7 321 123 42 29"},
-            {"Edmund Husserl",        "+9 654 124 12 41"},
-            {"Hegel",                 "+8 987 123 12 69"},
-            {"C++ courses",           "+7 123 456 72 89"},
-            {"WORK",                  "+7 123 456 78 39"},
-            {"DO NOT ANSWER",         "+7 031 544 88 00"}
+            {"Zermelo Fraenkel",      "+7 (902) 585-00-55"},
+            {"Benedict Austin",       "+7 (901) 343-22-34"},
+            {"Anna Brown",            "+7 (900) 159-64-87"},
+            {"Charlie Chaplin",       "+1 (475) 654-87-21"},
+            {"Ludwig Wittgenstein",   "+4 (147) 252-39-97"},
+            {"Johan A.",              "+4 (987) 873-87-64"},
+            {"Jonathan Whitley",      "+3 (123) 454-21-32"},
+            {"Edward (guitarist)",    "+7 (456) 321-32-21"},
+            {"Jack B.",               "+7 (789) 123-45-67"},
+            {"BOSS",                  "+3 (321) 632-12-34"},
+            {"Alexander The Great",   "+4 (654) 091-67-89"},
+            {"Mom",                   "+5 (987) 651-12-56"},
+            {"SECOND WORK",           "+6 (712) 331-21-56"},
+            {"Honey :3",              "+7 (098) 764-63-90"},
+            {"Robert Brandom",        "+7 (891) 241-24-23"},
+            {"Maria J.",              "+7 (321) 123-42-29"},
+            {"Edmund Husserl",        "+9 (654) 124-12-41"},
+            {"Hegel",                 "+8 (987) 123-12-69"},
+            {"C++ courses",           "+7 (123) 456-72-89"},
+            {"WORK",                  "+7 (123) 456-78-39"},
+            {"DO NOT ANSWER",         "+7 (031) 544-88-00"}
     };
 }
 
@@ -121,8 +121,33 @@ void PhoneBook::addContact(const std::string& jsonStr) {
 
     std::string number = request["Number"];
 
-    // Форматирование номера??
+    // Phone number formatting
+    std::string formatNumber = "";
 
-    // Add its content to map member
-    contactMap[request["Name"]] = ((number[0] == '+') ? number : ("+" + number));
+    // store all digits
+    for (char ch : number) {
+        if (isdigit(ch))
+            formatNumber += ch;
+    }
+
+    // If there are 11 digits, number will be changed to standard form
+    // If it is not the case, number will be stores 'as is'
+    bool canBeCorrected = (formatNumber.length() == 11);
+
+    if (canBeCorrected) {
+        // Formatting
+        formatNumber = "+" + std::string(1, formatNumber[0]) + " (" + formatNumber.substr(1, 3) + ") "
+                           + formatNumber.substr(4, 3) + "-" + formatNumber.substr(7, 2) + "-"
+                           + formatNumber.substr(9, 2);
+
+        // Then store
+        contactMap[request["Name"]] = formatNumber;
+    }
+    else
+        // Just store
+        contactMap[request["Name"]] = ((number[0] == '+') ? number : ("+" + number));
+
+
+
+
 }
